@@ -48,6 +48,32 @@ Other ideas
 - Tagging clouds like what you see in internet trending. Show the strength of the relationship between words/concepts. 
 - Present this as a google like interface with meta data overlays
 
+;examples/ideas
+;(new-tag tagname symbolname)
+;(tag-word tagsymbol wordsymbol)
+;(search (and (tag :jesusidentity) (tag :creation)))
+;(search (and (phrase "in the begining")(tag :creation)))
+;(search (word "god"))
+;(search (in-order "in" "beginning"))
+;(search (proximity 10 (word "god") (tag :creation)))
+;(before (word "god") (word "beginning"))
+;(after (word "god") (word "beginning"))
+
+;******************************************
+;examples
+;******************************************
+;(let books-of-moses (create-book-context ("gen" "ex" "lev" "num" "deu"))
+;(let books-by-john (create-author-context "john"))
+;(let books-nt (create-book-context ("matthew" "mark" "luke" "john" "...")))
+;(search "son of god" books-of-moses)
+;(search "son of god" ("gen"))
+;(- (search "son of god" books-new-testament) (search "son of god" books-by-john))
+;(search "son of god" (- books-new-testament books-by-john))
+;(save "brians's test seearch" (search "son of man" everything))
+
+
+
+
 ## License
 
 Copyright © 2014 Brian Nelson
