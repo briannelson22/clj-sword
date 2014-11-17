@@ -9,4 +9,6 @@
   :main ^:skip-aot clj-sword.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all}}
-  :global-vars {*print-length* 100})
+  :global-vars {*print-length* 100}
+  :jvm-opts ["-Xms512m"]
+)

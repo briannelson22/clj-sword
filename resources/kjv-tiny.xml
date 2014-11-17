@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osis>
+<osisText osisIDWork="KJV" osisRefWork="defaultReferenceScheme">
+  <header>
+    <work osisWork="KJV">
+      <title>King James Version (1769) with Strongs Numbers and Morphology</title>
+      <identifier type="OSIS">Bible.KJV</identifier>
+      <scope>Gen-Rev</scope>
+      <refSystem>Bible.KJV</refSystem>
+    </work>
+    <work osisWork="defaultReferenceScheme">
+      <refSystem>Bible.KJV</refSystem>
+    </work>
+  </header>
+  <div type="book" osisID="Gen" canonical="true">
+    <chapter osisID="Gen.30" chapterTitle="CHAPTER 30.">
+      <title type="chapter">CHAPTER 30.</title>
+      <verse osisID="Gen.30.1" sID="Gen.30.1"/><w lemma="strong:H07354">And when Rachel</w> <w morph="strongMorph:TH8799" lemma="strong:H07200">saw</w> <w morph="strongMorph:TH8804" lemma="strong:H03205">that she bare</w> <w lemma="strong:H03290">Jacob</w> <w lemma="strong:H07354">no children, Rachel</w> <w morph="strongMorph:TH8762" lemma="strong:H07065">envied</w> <w lemma="strong:H0269">her sister</w>; <w morph="strongMorph:TH8799" lemma="strong:H0559">and said</w> <w lemma="strong:H03290">unto Jacob</w>, <w morph="strongMorph:TH8798" lemma="strong:H03051">Give</w> <w lemma="strong:H01121">me children</w>, <w lemma="strong:H0369">or else</w> <w morph="strongMorph:TH8801" lemma="strong:H04191">I die</w>.<verse eID="Gen.30.1"/>
+      <verse osisID="Gen.30.4" sID="Gen.30.4"/><w morph="strongMorph:TH8799" lemma="strong:H05414">And she gave</w> <w lemma="strong:H01090">him Bilhah</w> <w lemma="strong:H08198">her handmaid</w> <w lemma="strong:H0802">to wife</w>: <w lemma="strong:H03290">and Jacob</w> <w morph="strongMorph:TH8799" lemma="strong:H0935">went in</w> unto her.<verse eID="Gen.30.4"/>
+    </chapter>
+  </div>
+</osisText>
+</osis>

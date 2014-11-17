@@ -11,47 +11,20 @@
 ; bible search research a completely repeatable,
 ; automatable process.
 ;******************************************
-; todo code reorganization
-; todo check into github
-;******************************************
 ; basic reading functionality
 ;******************************************
-; done list bibles
-; done load bible
-; done list books
-; done load books into map
+; todo list books
+; todo load books into map
 ; todo switch to clojurescript friendly parser
 ; todo list verses
 ; todo internal data structure
 ;        every word stands alone 
 ;        books are sequences of words 
-;        all tags/anchors/notes/whatever attach to the word by book & offset
-
-(comment ({
-           :book "john"
-           :text '("in" "the" "beginning" "...")}))
-
-(comment ({
-           :tagname "son of god"
-           :tagid :sonofgod
-           :locations ( 
-                  '(:john 99 105)
-                  '(:john 125 136))}))
-;
-;examples/ideas
-;(new-tag tagname symbolname)
-;(tag-word tagsymbol wordsymbol)
-;(search (and (tag :jesusidentity) (tag :creation)))
-;(search (and (phrase "in the begining") (tag :creation)))
-;(search (word "god"))
-;(search (in-order "in" "beginning"))
-;(search (proximity 10 (word "god") (tag :creation)))
-;(before (word "god") (word "beginning"))
-;(after (word "god") (word "beginning"))
+;        All tags/anchors/notes/whatever attach to the word by book & offset
 ;******************************************
 ; search functionality
 ;******************************************
-; todo: full text search returning verses
+; todo: text search returning verses
 ; todo: create context by speaker, author, proximity, etc.
 ; todo: make search composable
 ;******************************************
@@ -66,29 +39,26 @@
 ; todo: tags are ranges
 ; todo: alternates are just tag?
 
-;******************************************
-;examples
-;******************************************
-;(let books-of-moses (create-book-context ("gen" "ex" "lev" "num" "deu"))
-;(let books-by-john (create-author-context "john"))
-;(let books-nt (create-book-context ("matthew" "mark" "luke" "john" "...")))
-;(search "son of god" books-of-moses)
-;(search "son of god" ("gen"))
-;(- (search "son of god" books-new-testament) (search "son of god" books-by-john))
-;(search "son of god" (- books-new-testament books-by-john))
-;(save "brians's test seearch" (search "son of man" everything))
-
 
 ;***********************************************************
 ; utilities
 ;***********************************************************
-(defn first-content [element]
-  "return the first element within the content of the element passed in"
-  (first (:content element)))
-
 (defn no-content [element]
   "dissoc the content within an element"
   (dissoc (into {} element) :content))
+
+(defn dbg [node]
+    (if (associative? node)
+      (xml/emit-str (dissoc node :content))
+      (xml/emit-str node))
+  node)
+
+(defn as-short-xml [node]
+  (clojure.string/trim ; remove trailing \n
+    (with-out-str
+      (if (associative? node)
+        (xml/emit-str (no-content node))
+        (xml/emit-str node)))))
 
 ;***********************************************************
 ; bible loading/parsing/listing
@@ -120,7 +90,7 @@
 ;***********************************************************
 (defn get-osis-divs [osis-doc]
   "return a list of divs within an osis document"
-  (filter #(= (:tag %) :div) (:content (first-content osis-doc))))
+  (filter #(= (:tag %) :div)(:content (first (:content osis-doc))))))
 
 (defn get-book-name [book]
   "return a book name given the book"
@@ -148,17 +118,20 @@
 
 (defn get-chapters [osis-book]
   "return a list of chapters in a book"
-  (->> osis-book
-       (filter #(= (:tag %) :chapter))))
+  filter #(= (:tag %) :chapter) osis-book)
                  
 (defn get-chapter-name [chapter]
   "return a chapter name given the chapter"
-  (:content (first chapter)))
+  (:osisID (second (second chapter))))
 
 (defn map-chapters [osis-book]
   "return a map containing the chapters within an osis book"
   (into {} (for [chapter (get-chapters osis-book)]
-             [(keyword (get-chapter-name chapter)) (:content chapter)])))
+             [(keyword (get-chapter-name chapter)) chapter])))
+
+(defn get-verses [chapter]
+  "return a list of verses within a chapter"
+  filter #(= (:tag %) :verse) chapter)
 
 (defn write-pretty [data]
   "write the data structure to disk"
